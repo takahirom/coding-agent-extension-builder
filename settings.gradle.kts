@@ -13,5 +13,6 @@ plugins {
 }
 
 include(":coding-agent-extension-dsl")
+include(":workspace")
 
 rootProject.name = "coding-agent-extension-dsl"

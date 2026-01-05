@@ -140,4 +140,12 @@ fun Marketplace.writeToClaudeCode(outputDir: Path) {
     val claudePluginDir = marketplaceDir.resolve(".claude-plugin")
     claudePluginDir.createDirectories()
     claudePluginDir.resolve("marketplace.json").writeText(toClaudeCodeMarketplaceJson())
+
+    // Write embedded plugins
+    embeddedPlugins.forEach { embedded ->
+        // relativePath is like "./plugins/my-plugin", we need to resolve it from marketplaceDir
+        val pluginPath = embedded.relativePath.removePrefix("./")
+        val pluginParentDir = marketplaceDir.resolve(pluginPath).parent ?: marketplaceDir
+        embedded.plugin.writeToClaudeCode(pluginParentDir)
+    }
 }

@@ -6,15 +6,38 @@ data class Marketplace(
     val name: String,
     val owner: Owner,
     val plugins: List<MarketplacePlugin> = emptyList(),
-    val metadata: MarketplaceMetadata? = null
+    val metadata: MarketplaceMetadata? = null,
+    val embeddedPlugins: List<EmbeddedPlugin> = emptyList()
 ) {
     class Builder(
         private val name: String,
         private val owner: Owner
     ) {
         private val plugins = mutableListOf<MarketplacePlugin>()
+        private val embeddedPlugins = mutableListOf<EmbeddedPlugin>()
         private var metadata: MarketplaceMetadata? = null
 
+        /**
+         * Add a Plugin object directly. The plugin will be written to ./plugins/<name>/
+         * when writeToClaudeCode() is called.
+         */
+        fun addPlugin(plugin: Plugin) = apply {
+            val relativePath = "./plugins/${plugin.name}"
+            plugins.add(
+                MarketplacePlugin(
+                    name = plugin.name,
+                    source = PluginSource.RelativePath(relativePath),
+                    description = plugin.description,
+                    version = plugin.version,
+                    author = plugin.author
+                )
+            )
+            embeddedPlugins.add(EmbeddedPlugin(relativePath, plugin))
+        }
+
+        /**
+         * Add a reference to an external plugin by path (not embedded).
+         */
         fun addPlugin(
             name: String,
             source: String,
@@ -31,6 +54,9 @@ data class Marketplace(
             )
         }
 
+        /**
+         * Add a reference to an external plugin (GitHub, Git URL, etc.).
+         */
         fun addPlugin(
             name: String,
             source: PluginSource,
@@ -66,11 +92,17 @@ data class Marketplace(
                 name = name,
                 owner = owner,
                 plugins = plugins.toList(),
-                metadata = metadata
+                metadata = metadata,
+                embeddedPlugins = embeddedPlugins.toList()
             )
         }
     }
 }
+
+data class EmbeddedPlugin(
+    val relativePath: String,
+    val plugin: Plugin
+)
 
 data class Owner(
     val name: String,

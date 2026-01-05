@@ -30,4 +30,21 @@ See [proposals/01_init.md](proposals/01_init.md) for full API design.
 
 - `build-logic/` - Gradle convention plugins (composite build)
 - `coding-agent-extension-dsl/` - Main library module
+- `workspace/` - Playground for trying out the library
 - `proposals/` - Design documents
+
+## Workspace
+
+The `workspace/` module is a playground for trying out the library locally.
+
+```bash
+# Copy the template
+cp workspace/src/main/kotlin/Main.kt.template workspace/src/main/kotlin/Main.kt
+
+# Edit Main.kt as needed, then run
+./gradlew :workspace:run
+```
+
+- `Main.kt` is gitignored - modify freely
+- `Main.kt.template` is the starting point
+- Output goes to `workspace/output/` (also gitignored)

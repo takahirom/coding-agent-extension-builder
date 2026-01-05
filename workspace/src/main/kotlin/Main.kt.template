@@ -1,0 +1,81 @@
+import io.github.takahirom.codingagentextension.model.*
+import io.github.takahirom.codingagentextension.claudecode.writeToClaudeCode
+import java.nio.file.Path
+
+fun main() {
+    val outputDir = Path.of("output")
+
+    // 1. Create plugins with skills and commands
+    val formatterPlugin = Plugin.Builder(
+        name = "formatter",
+        description = "Code formatting utilities",
+        version = "1.0.0"
+    )
+        .author(name = "My Team")
+        .addCommand(
+            name = "format",
+            description = "Format the current file",
+            body = "# Format Command\n\nFormat code according to project standards."
+        )
+        .addSkill(
+            name = "style-guide",
+            description = "Code style guidelines for this project",
+            body = """
+                # Style Guide
+
+                ## Rules
+                - Use 4 spaces for indentation
+                - Max line length: 120 characters
+            """.trimIndent()
+        )
+        .build()
+
+    val linterPlugin = Plugin.Builder(
+        name = "linter",
+        description = "Code linting tools",
+        version = "1.0.0"
+    )
+        .author(name = "My Team")
+        .addSkill(
+            name = "lint-rules",
+            description = "Linting rules and how to fix common issues",
+            body = """
+                # Lint Rules
+
+                ## Common Issues
+                - Unused imports: Remove them
+                - Missing semicolons: Add them
+            """.trimIndent()
+        )
+        .build()
+
+    // 2. Create marketplace with embedded plugins
+    val marketplace = Marketplace.Builder(
+        name = "my-tools",
+        owner = Owner(name = "My Team", email = "team@example.com")
+    )
+        .addPlugin(formatterPlugin)  // Pass Plugin objects directly!
+        .addPlugin(linterPlugin)
+        .build()
+
+    // 3. Write everything with a single call
+    marketplace.writeToClaudeCode(outputDir)
+
+    println("""
+        Generated:
+        output/my-tools/
+        ├── .claude-plugin/
+        │   └── marketplace.json
+        └── plugins/
+            ├── formatter/
+            │   ├── .claude-plugin/plugin.json
+            │   ├── commands/format.md
+            │   └── skills/style-guide/SKILL.md
+            └── linter/
+                ├── .claude-plugin/plugin.json
+                └── skills/lint-rules/SKILL.md
+
+        Usage:
+        /plugin marketplace add ./output/my-tools
+    """.trimIndent())
+}

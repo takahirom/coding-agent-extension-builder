@@ -2,7 +2,9 @@ package io.github.takahirom.codingagentextension
 
 import io.github.takahirom.codingagentextension.claudecode.toClaudeCodePluginJson
 import io.github.takahirom.codingagentextension.claudecode.writeToClaudeCode
+import io.github.takahirom.codingagentextension.model.Command
 import io.github.takahirom.codingagentextension.model.Plugin
+import io.github.takahirom.codingagentextension.model.Skill
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.nio.file.Path
@@ -48,14 +50,10 @@ class PluginBuilderTest {
             version = "1.0.0"
         )
             .addCommand(
-                name = "format",
-                description = "Format code",
-                body = "# Format Command"
+                Command.Builder("format", "Format code", "# Format Command").build()
             )
             .addSkill(
-                name = "style-guide",
-                description = "Style guidelines",
-                body = "# Style Guide"
+                Skill.Builder("style-guide", "Style guidelines", "# Style Guide").build()
             )
             .build()
 
@@ -90,14 +88,10 @@ class PluginBuilderTest {
             version = "1.0.0"
         )
             .addCommand(
-                name = "hello",
-                description = "Say hello",
-                body = "# Hello"
+                Command.Builder("hello", "Say hello", "# Hello").build()
             )
             .addSkill(
-                name = "greeting",
-                description = "Greeting skill",
-                body = "# Greeting"
+                Skill.Builder("greeting", "Greeting skill", "# Greeting").build()
             )
             .build()
 

@@ -1,6 +1,7 @@
 package io.github.takahirom.codingagentextension
 
 import io.github.takahirom.codingagentextension.claudecode.writeToClaudeCode
+import io.github.takahirom.codingagentextension.model.Command
 import io.github.takahirom.codingagentextension.model.Plugin
 import io.github.takahirom.codingagentextension.model.Skill
 import org.junit.jupiter.api.Test
@@ -71,21 +72,25 @@ class GenerationTest {
                 email("test@example.com")
             }
             .addCommand(
-                name = "lint",
-                description = "Run linter on the codebase",
-                body = "# Lint Command\nRun the appropriate linter for the project."
+                Command.Builder(
+                    "lint",
+                    "Run linter on the codebase",
+                    "# Lint Command\nRun the appropriate linter for the project."
+                ).build()
             )
             .addSkill(
-                name = "style-guide",
-                description = "Code style guidelines for consistent formatting across the project.",
-                body = """
-                    # Style Guide
+                Skill.Builder(
+                    "style-guide",
+                    "Code style guidelines for consistent formatting across the project.",
+                    """
+                        # Style Guide
 
-                    ## General Rules
-                    - Use 4 spaces for indentation
-                    - Max line length: 120 characters
-                    - Use descriptive variable names
-                """.trimIndent()
+                        ## General Rules
+                        - Use 4 spaces for indentation
+                        - Max line length: 120 characters
+                        - Use descriptive variable names
+                    """.trimIndent()
+                ).build()
             )
             .build()
 

@@ -6,6 +6,7 @@ import io.github.takahirom.codingagentextension.model.Marketplace
 import io.github.takahirom.codingagentextension.model.Owner
 import io.github.takahirom.codingagentextension.model.Plugin
 import io.github.takahirom.codingagentextension.model.PluginSource
+import io.github.takahirom.codingagentextension.model.Skill
 import io.github.takahirom.codingagentextension.model.gitHubSource
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
@@ -116,9 +117,7 @@ class MarketplaceBuilderTest {
             version = "1.0.0"
         )
             .addSkill(
-                name = "test-skill",
-                description = "Test skill",
-                body = "# Test"
+                Skill.Builder("test-skill", "Test skill", "# Test").build()
             )
             .build()
 

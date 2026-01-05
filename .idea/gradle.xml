@@ -23,6 +23,7 @@
             <option value="$PROJECT_DIR$/build-logic" />
             <option value="$PROJECT_DIR$/build-logic/convention" />
             <option value="$PROJECT_DIR$/coding-agent-extension-dsl" />
+            <option value="$PROJECT_DIR$/workspace" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -23,12 +23,12 @@ data class Plugin(
             this.author = Author.Builder(name).apply(block).build()
         }
 
-        fun addCommand(name: String, description: String, body: String) = apply {
-            commands.add(Command.Builder(name, description, body).build())
+        fun addCommand(command: Command) = apply {
+            commands.add(command)
         }
 
-        fun addSkill(name: String, description: String, body: String, block: Skill.Builder.() -> Unit = {}) = apply {
-            skills.add(Skill.Builder(name, description, body).apply(block).build())
+        fun addSkill(skill: Skill) = apply {
+            skills.add(skill)
         }
 
         fun build(): Plugin {

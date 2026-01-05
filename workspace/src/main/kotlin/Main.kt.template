@@ -13,19 +13,19 @@ fun main() {
     )
         .author(name = "My Team")
         .addCommand(
-            name = "greet",
-            description = "Say hello",
-            body = "# Greet Command\n\nSay hello to the user."
+            Command.Builder("greet", "Say hello", "# Greet Command\n\nSay hello to the user.").build()
         )
         .addSkill(
-            name = "coding-style",
-            description = "Coding style guidelines",
-            body = """
-                # Coding Style
+            Skill.Builder(
+                "coding-style",
+                "Coding style guidelines",
+                """
+                    # Coding Style
 
-                - Use 4 spaces for indentation
-                - Max line length: 120 characters
-            """.trimIndent()
+                    - Use 4 spaces for indentation
+                    - Max line length: 120 characters
+                """.trimIndent()
+            ).build()
         )
         .build()
 

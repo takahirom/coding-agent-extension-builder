@@ -9,6 +9,7 @@ data class Plugin(
     val author: Author? = null,
     val commands: List<Command> = emptyList(),
     val skills: List<Skill> = emptyList(),
+    val agents: List<Agent> = emptyList(),
     val hooks: List<HookMatcher> = emptyList()
 ) {
     class Builder(
@@ -19,6 +20,7 @@ data class Plugin(
         private var author: Author? = null
         private val commands = mutableListOf<Command>()
         private val skills = mutableListOf<Skill>()
+        private val agents = mutableListOf<Agent>()
         private val hooks = mutableListOf<HookMatcher>()
 
         fun author(name: String, block: Author.Builder.() -> Unit = {}) = apply {
@@ -31,6 +33,10 @@ data class Plugin(
 
         fun addSkill(skill: Skill) = apply {
             skills.add(skill)
+        }
+
+        fun addAgent(agent: Agent) = apply {
+            agents.add(agent)
         }
 
         fun addHook(hook: HookMatcher) = apply {
@@ -48,6 +54,7 @@ data class Plugin(
                 author = author,
                 commands = commands.toList(),
                 skills = skills.toList(),
+                agents = agents.toList(),
                 hooks = hooks.toList()
             )
         }

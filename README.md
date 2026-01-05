@@ -41,6 +41,16 @@ val plugin = Plugin.Builder(
             body = "# Style\n..."
         ).build()
     )
+    .addAgent(
+        Agent.Builder(
+            name = "code-reviewer",
+            description = "Review code changes",
+            body = "You are a senior code reviewer. Focus on code quality and security."
+        )
+            .tools("Read", "Grep", "Glob", "Bash")
+            .model("inherit")
+            .build()
+    )
     .addHook(
         HookMatcher.Builder(HookEvent.PostToolUse)
             .matcher("Write|Edit")
@@ -73,6 +83,8 @@ output/my-marketplace/
         │   └── plugin.json
         ├── commands/
         │   └── greet.md
+        ├── agents/
+        │   └── code-reviewer.md
         ├── hooks/
         │   └── hooks.json
         ├── scripts/

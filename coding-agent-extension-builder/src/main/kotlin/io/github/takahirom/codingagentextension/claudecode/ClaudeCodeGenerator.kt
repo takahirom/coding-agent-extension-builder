@@ -51,6 +51,24 @@ fun Command.toClaudeCodeString(): String = buildString {
     append(body)
 }
 
+// Extension functions for Agent
+fun Agent.toClaudeCodeString(): String = buildString {
+    appendLine("---")
+    appendLine("name: $name")
+    appendLine("description: $description")
+    if (tools.isNotEmpty()) {
+        appendLine("tools: ${tools.joinToString(", ")}")
+    }
+    model?.let { appendLine("model: $it") }
+    permissionMode?.let { appendLine("permissionMode: $it") }
+    if (skills.isNotEmpty()) {
+        appendLine("skills: ${skills.joinToString(", ")}")
+    }
+    appendLine("---")
+    appendLine()
+    append(body)
+}
+
 // Extension functions for Hooks
 fun List<HookMatcher>.toClaudeCodeHooksJson(): String {
     val hooksData = buildJsonObject {
@@ -126,6 +144,15 @@ fun Plugin.writeClaudeCodeExtension(outputDir: Path) {
         val skillsDir = pluginDir.resolve("skills")
         skills.forEach { skill ->
             skill.writeClaudeCodeExtension(skillsDir)
+        }
+    }
+
+    // Create agents/*.md
+    if (agents.isNotEmpty()) {
+        val agentsDir = pluginDir.resolve("agents")
+        agentsDir.createDirectories()
+        agents.forEach { agent ->
+            agentsDir.resolve("${agent.name}.md").writeText(agent.toClaudeCodeString())
         }
     }
 

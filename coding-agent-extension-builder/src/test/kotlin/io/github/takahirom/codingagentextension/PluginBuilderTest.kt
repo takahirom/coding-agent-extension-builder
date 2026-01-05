@@ -2,6 +2,7 @@ package io.github.takahirom.codingagentextension
 
 import io.github.takahirom.codingagentextension.claudecode.toClaudeCodePluginJson
 import io.github.takahirom.codingagentextension.claudecode.writeClaudeCodeExtension
+import io.github.takahirom.codingagentextension.model.Agent
 import io.github.takahirom.codingagentextension.model.Command
 import io.github.takahirom.codingagentextension.model.Plugin
 import io.github.takahirom.codingagentextension.model.Skill
@@ -55,12 +56,17 @@ class PluginBuilderTest {
             .addSkill(
                 Skill.Builder("style-guide", "Style guidelines", "# Style Guide").build()
             )
+            .addAgent(
+                Agent.Builder("code-reviewer", "Review code changes", "Review code changes.").build()
+            )
             .build()
 
         assertEquals(1, plugin.commands.size)
         assertEquals("format", plugin.commands[0].name)
         assertEquals(1, plugin.skills.size)
         assertEquals("style-guide", plugin.skills[0].name)
+        assertEquals(1, plugin.agents.size)
+        assertEquals("code-reviewer", plugin.agents[0].name)
     }
 
     @Test
@@ -93,6 +99,9 @@ class PluginBuilderTest {
             .addSkill(
                 Skill.Builder("greeting", "Greeting skill", "# Greeting").build()
             )
+            .addAgent(
+                Agent.Builder("code-reviewer", "Review code changes", "Review code changes.").build()
+            )
             .build()
 
         plugin.writeClaudeCodeExtension(tempDir)
@@ -100,5 +109,6 @@ class PluginBuilderTest {
         assertTrue(tempDir.resolve("my-plugin/.claude-plugin/plugin.json").toFile().exists())
         assertTrue(tempDir.resolve("my-plugin/commands/hello.md").toFile().exists())
         assertTrue(tempDir.resolve("my-plugin/skills/greeting/SKILL.md").toFile().exists())
+        assertTrue(tempDir.resolve("my-plugin/agents/code-reviewer.md").toFile().exists())
     }
 }

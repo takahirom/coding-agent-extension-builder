@@ -31,6 +31,16 @@ fun main(args: Array<String>) {
                 """.trimIndent()
             ).build()
         )
+        .addAgent(
+            Agent.Builder(
+                name = "code-reviewer",
+                description = "Review code changes",
+                body = "You are a senior code reviewer. Focus on code quality and security."
+            )
+                .tools("Read", "Grep", "Glob", "Bash")
+                .model("inherit")
+                .build()
+        )
         .addHook(
             hook = HookMatcher.Builder(HookEvent.PostToolUse)
                 .matcher("Write|Edit")

@@ -4,7 +4,7 @@ Kotlin library for generating coding agent (Claude Code, etc.) plugins and skill
 
 ## Motivation
 
-Writing coding agent extensions (plugins, skills, marketplaces) by hand is error-prone:
+Writing coding agent extensions (plugins, skills, marketplaces) is error-prone:
 
 - Need to remember `marketplace.json` format
 - Need to create correct folder structure (`.claude-plugin/plugin.json`, `skills/*/SKILL.md`, etc.)

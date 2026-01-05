@@ -1,5 +1,5 @@
 ---
-name: coding-agent-extension-dsl
+name: coding-agent-extension-builder
 description: |
   Generate Claude Code plugins, skills, and marketplaces using Kotlin DSL.
   Use when the user wants to:
@@ -11,7 +11,7 @@ license: MIT
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 ---
 
-# coding-agent-extension-dsl
+# coding-agent-extension-builder
 
 Kotlin library for generating coding agent extensions with compile-time safety.
 

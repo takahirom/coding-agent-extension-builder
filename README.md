@@ -1,4 +1,4 @@
-# coding-agent-extension-dsl
+# coding-agent-extension-builder
 
 Kotlin library for generating coding agent (Claude Code, etc.) plugins and skills using Builder pattern.
 
@@ -94,7 +94,7 @@ Writing this structure by hand requires knowing the exact folder names, file nam
 ## Project Structure
 
 - `build-logic/` - Gradle convention plugins (composite build)
-- `coding-agent-extension-dsl/` - Main library module
+- `coding-agent-extension-builder/` - Main library module
 - `workspace/` - Playground for trying out the library
 - `proposals/` - Design documents
 
@@ -119,8 +119,8 @@ cp workspace/src/main/kotlin/Main.kt.template workspace/src/main/kotlin/Main.kt
 1. **Clone this repository** and edit `workspace/src/main/kotlin/Main.kt`:
 
 ```bash
-git clone https://github.com/takahirom/coding-agent-extension-dsl.git
-cd coding-agent-extension-dsl
+git clone https://github.com/takahirom/coding-agent-extension-builder.git
+cd coding-agent-extension-builder
 cp workspace/src/main/kotlin/Main.kt.template workspace/src/main/kotlin/Main.kt
 # Edit Main.kt with your plugin definition
 ```

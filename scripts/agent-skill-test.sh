@@ -20,7 +20,7 @@ fi
 
 # 2. Run Kotlin tests that generate skills to temp/generated-skills
 echo "Running generation tests..."
-"$PROJECT_ROOT/gradlew" -p "$PROJECT_ROOT" :coding-agent-extension-dsl:test --tests "*GenerationTest*"
+"$PROJECT_ROOT/gradlew" -p "$PROJECT_ROOT" :coding-agent-extension-builder:test --tests "*GenerationTest*"
 
 # 3. Validate generated skills with skills-ref
 echo "Setting up skills-ref..."

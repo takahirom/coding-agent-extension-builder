@@ -1,4 +1,4 @@
-# Proposal: coding-agent-extension-dsl
+# Proposal: coding-agent-extension-builder
 
 ## Problem
 
@@ -93,7 +93,7 @@ marketplace.writeClaudeCodeExtension(Path("output"))
 ## Module Structure
 
 ```
-coding-agent-extension-dsl/src/main/kotlin/io/github/takahirom/codingagentextension/
+coding-agent-extension-builder/src/main/kotlin/io/github/takahirom/codingagentextension/
 ├── model/           # Data classes with nested Builder (Skill, Plugin, Command, Marketplace)
 ├── validation/      # Name/description validators
 └── claudecode/      # Claude Code specific generator (extension functions)
@@ -107,10 +107,10 @@ coding-agent-extension-dsl/src/main/kotlin/io/github/takahirom/codingagentextens
 Uses Gradle composite build with build-logic:
 
 ```
-coding-agent-extension-dsl/
+coding-agent-extension-builder/
 ├── build-logic/
 │   └── convention/          # Shared build conventions
-├── coding-agent-extension-dsl/
+├── coding-agent-extension-builder/
 │   └── build.gradle.kts     # Module build
 ├── gradle/
 │   └── libs.versions.toml   # Version catalog

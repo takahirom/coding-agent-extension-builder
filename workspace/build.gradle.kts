@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":coding-agent-extension-dsl"))
+    implementation(project(":coding-agent-extension-builder"))
 }
 
 application {

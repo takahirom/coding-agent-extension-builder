@@ -41,6 +41,12 @@ val plugin = Plugin.Builder(
             body = "# Style\n..."
         ).build()
     )
+    .addHook(
+        HookMatcher.Builder(HookEvent.PostToolUse)
+            .matcher("Write|Edit")
+            .command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", timeout = 30)
+            .build()
+    )
     .build()
 
 // Create marketplace with the plugin
@@ -67,6 +73,10 @@ output/my-marketplace/
         │   └── plugin.json
         ├── commands/
         │   └── greet.md
+        ├── hooks/
+        │   └── hooks.json
+        ├── scripts/
+        │   └── format.sh  ← You provide this
         └── skills/
             └── coding-style/
                 └── SKILL.md

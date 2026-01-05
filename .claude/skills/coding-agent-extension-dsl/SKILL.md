@@ -93,6 +93,14 @@ output/my-marketplace/
 - `.author(name: String)` - Set author
 - `.addCommand(command: Command)` - Add command
 - `.addSkill(skill: Skill)` - Add skill
+- `.addHook(hook: HookMatcher)` - Add hook
+
+### HookMatcher.Builder(event: HookEvent)
+- `.matcher(pattern: String)` - Tool pattern (e.g., "Write|Edit")
+- `.command(command: String, timeout: Int?)` - Add command hook
+- `.prompt(prompt: String, timeout: Int?)` - Add prompt hook (LLM-based)
+
+HookEvent: PreToolUse, PostToolUse, PermissionRequest, Notification, UserPromptSubmit, Stop, SubagentStop, PreCompact, SessionStart, SessionEnd
 
 ### Marketplace.Builder(name, owner)
 - `.addPlugin(plugin: Plugin)` - Add embedded plugin

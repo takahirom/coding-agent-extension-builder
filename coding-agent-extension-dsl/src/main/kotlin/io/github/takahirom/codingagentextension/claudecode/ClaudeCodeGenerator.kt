@@ -51,6 +51,36 @@ fun Command.toClaudeCodeString(): String = buildString {
     append(body)
 }
 
+// Extension functions for Hooks
+fun List<HookMatcher>.toClaudeCodeHooksJson(): String {
+    val hooksData = buildJsonObject {
+        // Group hooks by event
+        val groupedByEvent = this@toClaudeCodeHooksJson.groupBy { it.event }
+        put("hooks", buildJsonObject {
+            groupedByEvent.forEach { (event, matchers) ->
+                put(event.name, buildJsonArray {
+                    matchers.forEach { matcher ->
+                        add(buildJsonObject {
+                            matcher.matcher?.let { put("matcher", it) }
+                            put("hooks", buildJsonArray {
+                                matcher.hooks.forEach { hook ->
+                                    add(buildJsonObject {
+                                        put("type", hook.type.name.lowercase())
+                                        hook.command?.let { put("command", it) }
+                                        hook.prompt?.let { put("prompt", it) }
+                                        hook.timeout?.let { put("timeout", it) }
+                                    })
+                                }
+                            })
+                        })
+                    }
+                })
+            }
+        })
+    }
+    return json.encodeToString(JsonObject.serializer(), hooksData)
+}
+
 // Extension functions for Plugin
 fun Plugin.toClaudeCodePluginJson(): String {
     val pluginData = buildJsonObject {
@@ -90,6 +120,13 @@ fun Plugin.writeClaudeCodeExtension(outputDir: Path) {
         skills.forEach { skill ->
             skill.writeClaudeCodeExtension(skillsDir)
         }
+    }
+
+    // Create hooks/hooks.json
+    if (hooks.isNotEmpty()) {
+        val hooksDir = pluginDir.resolve("hooks")
+        hooksDir.createDirectories()
+        hooksDir.resolve("hooks.json").writeText(hooks.toClaudeCodeHooksJson())
     }
 }
 

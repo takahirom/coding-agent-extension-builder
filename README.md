@@ -20,19 +20,47 @@ This library provides:
 ## Usage
 
 ```kotlin
-val skill = Skill.Builder(
-    name = "pdf-processor",
-    description = "Extract text from PDFs. Use when working with PDF files.",
-    body = "# PDF Processing\n\nExtract text with pdfplumber..."
+// Create a plugin with command and skill
+val plugin = Plugin.Builder(
+    name = "my-plugin",
+    description = "My awesome plugin",
+    version = "1.0.0"
 )
-    .license("MIT")
-    .allowedTools("Read", "Grep", "Glob")
+    .author(name = "My Team")
+    .addCommand(name = "greet", description = "Say hello", body = "# Greet\n...")
+    .addSkill(name = "coding-style", description = "Style guide", body = "# Style\n...")
     .build()
 
-skill.writeToClaudeCode(Path("output"))
+// Create marketplace with the plugin
+val marketplace = Marketplace.Builder(
+    name = "my-marketplace",
+    owner = Owner(name = "My Team")
+)
+    .addPlugin(plugin)
+    .build()
+
+// Write everything with a single call
+marketplace.writeToClaudeCode(Path("output"))
 ```
 
-See [proposals/01_init.md](proposals/01_init.md) for full API design.
+This generates:
+
+```
+output/my-marketplace/
+├── .claude-plugin/
+│   └── marketplace.json
+└── plugins/
+    └── my-plugin/
+        ├── .claude-plugin/
+        │   └── plugin.json
+        ├── commands/
+        │   └── greet.md
+        └── skills/
+            └── coding-style/
+                └── SKILL.md
+```
+
+Writing this structure by hand requires knowing the exact folder names, file names, JSON format, and YAML front matter fields. This library handles all of that.
 
 ## Build
 

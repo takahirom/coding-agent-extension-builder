@@ -13,13 +13,17 @@ fun main() {
     )
         .author(name = "My Team")
         .addCommand(
-            Command.Builder("greet", "Say hello", "# Greet Command\n\nSay hello to the user.").build()
+            Command.Builder(
+                name = "greet",
+                description = "Say hello",
+                body = "# Greet Command\n\nSay hello to the user."
+            ).build()
         )
         .addSkill(
             Skill.Builder(
-                "coding-style",
-                "Coding style guidelines",
-                """
+                name = "coding-style",
+                description = "Coding style guidelines",
+                body = """
                     # Coding Style
 
                     - Use 4 spaces for indentation
@@ -32,7 +36,10 @@ fun main() {
     // 2. Create marketplace with the plugin
     val marketplace = Marketplace.Builder(
         name = "my-marketplace",
-        owner = Owner(name = "My Team", email = "team@example.com")
+        owner = Owner(
+            name = "My Team",
+            email = "team@example.com"
+        )
     )
         .addPlugin(plugin)
         .build()

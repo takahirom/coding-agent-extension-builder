@@ -27,8 +27,20 @@ val plugin = Plugin.Builder(
     version = "1.0.0"
 )
     .author(name = "My Team")
-    .addCommand(Command.Builder("greet", "Say hello", "# Greet\n...").build())
-    .addSkill(Skill.Builder("coding-style", "Style guide", "# Style\n...").build())
+    .addCommand(
+        Command.Builder(
+            name = "greet",
+            description = "Say hello",
+            body = "# Greet\n..."
+        ).build()
+    )
+    .addSkill(
+        Skill.Builder(
+            name = "coding-style",
+            description = "Style guide",
+            body = "# Style\n..."
+        ).build()
+    )
     .build()
 
 // Create marketplace with the plugin

@@ -103,3 +103,37 @@ cp workspace/src/main/kotlin/Main.kt.template workspace/src/main/kotlin/Main.kt
 - `Main.kt` is gitignored - modify freely
 - `Main.kt.template` is the starting point
 - Output goes to `workspace/output/` (also gitignored)
+
+## Distributing Plugins via GitHub
+
+1. **Clone this repository** and edit `workspace/src/main/kotlin/Main.kt`:
+
+```bash
+git clone https://github.com/takahirom/coding-agent-extension-dsl.git
+cd coding-agent-extension-dsl
+cp workspace/src/main/kotlin/Main.kt.template workspace/src/main/kotlin/Main.kt
+# Edit Main.kt with your plugin definition
+```
+
+2. **Generate directly to your plugin repository**:
+
+```bash
+# Pass output path as argument
+./gradlew :workspace:run --args="/path/to/my-plugin-repo"
+```
+
+3. **Commit and push**:
+
+```bash
+cd /path/to/my-plugin-repo
+git add -A && git commit -m "Add plugins"
+git push
+```
+
+4. **Install from GitHub** in Claude Code:
+
+```
+/plugin marketplace add yourname/my-plugin-repo
+```
+
+Your team can now install your plugins directly from GitHub!

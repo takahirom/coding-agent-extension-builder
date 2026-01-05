@@ -2,8 +2,8 @@ import io.github.takahirom.codingagentextension.model.*
 import io.github.takahirom.codingagentextension.claudecode.writeToClaudeCode
 import java.nio.file.Path
 
-fun main() {
-    val outputDir = Path.of("output")
+fun main(args: Array<String>) {
+    val outputDir = Path.of(args.firstOrNull() ?: "output")
 
     // 1. Create a plugin with command and skill
     val plugin = Plugin.Builder(
@@ -47,5 +47,5 @@ fun main() {
     // 3. Write everything with a single call
     marketplace.writeToClaudeCode(outputDir)
 
-    println("Done! Check output/my-marketplace/")
+    println("Done! Check $outputDir/my-marketplace/")
 }

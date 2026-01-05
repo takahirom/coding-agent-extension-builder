@@ -44,7 +44,7 @@ val plugin = Plugin.Builder(
     .addHook(
         HookMatcher.Builder(HookEvent.PostToolUse)
             .matcher("Write|Edit")
-            .command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", timeout = 30)
+            .addCommand(HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", timeout = 30))
             .build()
     )
     .build()

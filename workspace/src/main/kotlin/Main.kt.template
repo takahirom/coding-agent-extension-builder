@@ -31,6 +31,12 @@ fun main(args: Array<String>) {
                 """.trimIndent()
             ).build()
         )
+        .addHook(
+            hook = HookMatcher.Builder(HookEvent.PostToolUse)
+                .matcher("Write|Edit")
+                .addCommand(HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", timeout = 30))
+                .build()
+        )
         .build()
 
     // 2. Create marketplace with the plugin

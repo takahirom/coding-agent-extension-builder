@@ -17,22 +17,21 @@ enum class HookEvent {
 }
 
 /**
- * Type of hook execution.
- */
-enum class HookType {
-    Command,
-    Prompt
-}
-
-/**
  * A single hook command or prompt configuration.
  */
-data class HookCommand(
-    val type: HookType,
-    val command: String? = null,
-    val prompt: String? = null,
-    val timeout: Int? = null
-)
+sealed class HookCommand {
+    abstract val timeout: Int?
+
+    data class Command(
+        val command: String,
+        override val timeout: Int? = null
+    ) : HookCommand()
+
+    data class Prompt(
+        val prompt: String,
+        override val timeout: Int? = null
+    ) : HookCommand()
+}
 
 /**
  * A hook matcher configuration that groups hooks by pattern.
@@ -56,19 +55,17 @@ data class HookMatcher(
         /**
          * Add a command hook.
          * @param command The bash command to execute. Use ${CLAUDE_PLUGIN_ROOT} for plugin-relative paths.
-         * @param timeout Optional timeout in seconds.
          */
-        fun command(command: String, timeout: Int? = null) = apply {
-            hooks.add(HookCommand(type = HookType.Command, command = command, timeout = timeout))
+        fun addCommand(command: HookCommand.Command) = apply {
+            hooks.add(command)
         }
 
         /**
          * Add a prompt hook (LLM-based evaluation).
          * @param prompt The prompt to send to the LLM. Use $ARGUMENTS for hook input.
-         * @param timeout Optional timeout in seconds.
          */
-        fun prompt(prompt: String, timeout: Int? = null) = apply {
-            hooks.add(HookCommand(type = HookType.Prompt, prompt = prompt, timeout = timeout))
+        fun addPrompt(prompt: HookCommand.Prompt) = apply {
+            hooks.add(prompt)
         }
 
         fun build(): HookMatcher {

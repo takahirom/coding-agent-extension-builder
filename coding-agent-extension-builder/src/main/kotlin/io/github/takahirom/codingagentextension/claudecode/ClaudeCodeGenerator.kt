@@ -65,9 +65,16 @@ fun List<HookMatcher>.toClaudeCodeHooksJson(): String {
                             put("hooks", buildJsonArray {
                                 matcher.hooks.forEach { hook ->
                                     add(buildJsonObject {
-                                        put("type", hook.type.name.lowercase())
-                                        hook.command?.let { put("command", it) }
-                                        hook.prompt?.let { put("prompt", it) }
+                                        when (hook) {
+                                            is HookCommand.Command -> {
+                                                put("type", "command")
+                                                put("command", hook.command)
+                                            }
+                                            is HookCommand.Prompt -> {
+                                                put("type", "prompt")
+                                                put("prompt", hook.prompt)
+                                            }
+                                        }
                                         hook.timeout?.let { put("timeout", it) }
                                     })
                                 }

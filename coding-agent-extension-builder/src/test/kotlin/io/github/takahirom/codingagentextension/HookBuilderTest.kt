@@ -2,6 +2,7 @@ package io.github.takahirom.codingagentextension
 
 import io.github.takahirom.codingagentextension.claudecode.toClaudeCodeHooksJson
 import io.github.takahirom.codingagentextension.claudecode.writeClaudeCodeExtension
+import io.github.takahirom.codingagentextension.model.HookCommand
 import io.github.takahirom.codingagentextension.model.HookEvent
 import io.github.takahirom.codingagentextension.model.HookMatcher
 import io.github.takahirom.codingagentextension.model.Plugin
@@ -17,34 +18,36 @@ class HookBuilderTest {
     fun `hook with command`() {
         val hook = HookMatcher.Builder(HookEvent.PostToolUse)
             .matcher("Write|Edit")
-            .command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", timeout = 30)
+            .addCommand(HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", timeout = 30))
             .build()
 
         assertEquals(HookEvent.PostToolUse, hook.event)
         assertEquals("Write|Edit", hook.matcher)
         assertEquals(1, hook.hooks.size)
-        assertEquals("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", hook.hooks[0].command)
-        assertEquals(30, hook.hooks[0].timeout)
+        val firstHook = hook.hooks[0] as HookCommand.Command
+        assertEquals("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", firstHook.command)
+        assertEquals(30, firstHook.timeout)
     }
 
     @Test
     fun `hook with prompt`() {
         val hook = HookMatcher.Builder(HookEvent.Stop)
-            .prompt("Check if all tasks are complete. Context: \$ARGUMENTS")
+            .addPrompt(HookCommand.Prompt("Check if all tasks are complete. Context: \$ARGUMENTS"))
             .build()
 
         assertEquals(HookEvent.Stop, hook.event)
         assertEquals(null, hook.matcher)
         assertEquals(1, hook.hooks.size)
-        assertEquals("Check if all tasks are complete. Context: \$ARGUMENTS", hook.hooks[0].prompt)
+        val firstHook = hook.hooks[0] as HookCommand.Prompt
+        assertEquals("Check if all tasks are complete. Context: \$ARGUMENTS", firstHook.prompt)
     }
 
     @Test
     fun `hook with multiple commands`() {
         val hook = HookMatcher.Builder(HookEvent.PreToolUse)
             .matcher("Bash")
-            .command("\${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh")
-            .command("\${CLAUDE_PLUGIN_ROOT}/scripts/log.sh", timeout = 10)
+            .addCommand(HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh"))
+            .addCommand(HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/log.sh", timeout = 10))
             .build()
 
         assertEquals(2, hook.hooks.size)
@@ -55,7 +58,7 @@ class HookBuilderTest {
         val hooks = listOf(
             HookMatcher.Builder(HookEvent.PostToolUse)
                 .matcher("Write|Edit")
-                .command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", timeout = 30)
+                .addCommand(HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", timeout = 30))
                 .build()
         )
 
@@ -78,7 +81,7 @@ class HookBuilderTest {
             .addHook(
                 HookMatcher.Builder(HookEvent.PostToolUse)
                     .matcher("Write|Edit")
-                    .command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh")
+                    .addCommand(HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh"))
                     .build()
             )
             .build()
@@ -106,11 +109,11 @@ class HookBuilderTest {
         val hooks = listOf(
             HookMatcher.Builder(HookEvent.PostToolUse)
                 .matcher("Write")
-                .command("cmd1")
+                .addCommand(HookCommand.Command("cmd1"))
                 .build(),
             HookMatcher.Builder(HookEvent.PostToolUse)
                 .matcher("Edit")
-                .command("cmd2")
+                .addCommand(HookCommand.Command("cmd2"))
                 .build()
         )
 

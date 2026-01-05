@@ -1,7 +1,7 @@
 package io.github.takahirom.codingagentextension
 
 import io.github.takahirom.codingagentextension.claudecode.toClaudeCodeMarketplaceJson
-import io.github.takahirom.codingagentextension.claudecode.writeToClaudeCode
+import io.github.takahirom.codingagentextension.claudecode.writeClaudeCodeExtension
 import io.github.takahirom.codingagentextension.model.Marketplace
 import io.github.takahirom.codingagentextension.model.Owner
 import io.github.takahirom.codingagentextension.model.Plugin
@@ -79,7 +79,7 @@ class MarketplaceBuilderTest {
             .addPlugin(name = "plugin1", source = "./p1")
             .build()
 
-        mp.writeToClaudeCode(tempDir)
+        mp.writeClaudeCodeExtension(tempDir)
 
         assertTrue(tempDir.resolve("my-marketplace/.claude-plugin/marketplace.json").toFile().exists())
     }
@@ -128,7 +128,7 @@ class MarketplaceBuilderTest {
             .addPlugin(plugin)
             .build()
 
-        mp.writeToClaudeCode(tempDir)
+        mp.writeClaudeCodeExtension(tempDir)
 
         assertTrue(tempDir.resolve("my-marketplace/.claude-plugin/marketplace.json").toFile().exists())
         assertTrue(tempDir.resolve("my-marketplace/plugins/my-plugin/.claude-plugin/plugin.json").toFile().exists())

@@ -36,7 +36,7 @@ fun Skill.toClaudeCodeString(): String = buildString {
     append(body)
 }
 
-fun Skill.writeToClaudeCode(outputDir: Path) {
+fun Skill.writeClaudeCodeExtension(outputDir: Path) {
     val skillDir = outputDir.resolve(name)
     skillDir.createDirectories()
     skillDir.resolve("SKILL.md").writeText(toClaudeCodeString())
@@ -67,7 +67,7 @@ fun Plugin.toClaudeCodePluginJson(): String {
     return json.encodeToString(JsonObject.serializer(), pluginData)
 }
 
-fun Plugin.writeToClaudeCode(outputDir: Path) {
+fun Plugin.writeClaudeCodeExtension(outputDir: Path) {
     val pluginDir = outputDir.resolve(name)
 
     // Create .claude-plugin/plugin.json
@@ -88,7 +88,7 @@ fun Plugin.writeToClaudeCode(outputDir: Path) {
     if (skills.isNotEmpty()) {
         val skillsDir = pluginDir.resolve("skills")
         skills.forEach { skill ->
-            skill.writeToClaudeCode(skillsDir)
+            skill.writeClaudeCodeExtension(skillsDir)
         }
     }
 }
@@ -140,7 +140,7 @@ fun Marketplace.toClaudeCodeMarketplaceJson(): String {
     return json.encodeToString(JsonObject.serializer(), marketplaceData)
 }
 
-fun Marketplace.writeToClaudeCode(outputDir: Path) {
+fun Marketplace.writeClaudeCodeExtension(outputDir: Path) {
     val marketplaceDir = outputDir.resolve(name)
     val claudePluginDir = marketplaceDir.resolve(".claude-plugin")
     claudePluginDir.createDirectories()
@@ -151,6 +151,6 @@ fun Marketplace.writeToClaudeCode(outputDir: Path) {
         // relativePath is like "./plugins/my-plugin", we need to resolve it from marketplaceDir
         val pluginPath = embedded.relativePath.removePrefix("./")
         val pluginParentDir = marketplaceDir.resolve(pluginPath).parent ?: marketplaceDir
-        embedded.plugin.writeToClaudeCode(pluginParentDir)
+        embedded.plugin.writeClaudeCodeExtension(pluginParentDir)
     }
 }

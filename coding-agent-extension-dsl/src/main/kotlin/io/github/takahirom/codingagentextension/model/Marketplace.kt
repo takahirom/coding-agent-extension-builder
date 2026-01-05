@@ -19,7 +19,7 @@ data class Marketplace(
 
         /**
          * Add a Plugin object directly. The plugin will be written to ./plugins/<name>/
-         * when writeToClaudeCode() is called.
+         * when writeClaudeCodeExtension() is called.
          */
         fun addPlugin(plugin: Plugin) = apply {
             val relativePath = "./plugins/${plugin.name}"

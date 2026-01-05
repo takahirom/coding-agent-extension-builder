@@ -1,7 +1,7 @@
 package io.github.takahirom.codingagentextension
 
 import io.github.takahirom.codingagentextension.claudecode.toClaudeCodePluginJson
-import io.github.takahirom.codingagentextension.claudecode.writeToClaudeCode
+import io.github.takahirom.codingagentextension.claudecode.writeClaudeCodeExtension
 import io.github.takahirom.codingagentextension.model.Command
 import io.github.takahirom.codingagentextension.model.Plugin
 import io.github.takahirom.codingagentextension.model.Skill
@@ -95,7 +95,7 @@ class PluginBuilderTest {
             )
             .build()
 
-        plugin.writeToClaudeCode(tempDir)
+        plugin.writeClaudeCodeExtension(tempDir)
 
         assertTrue(tempDir.resolve("my-plugin/.claude-plugin/plugin.json").toFile().exists())
         assertTrue(tempDir.resolve("my-plugin/commands/hello.md").toFile().exists())

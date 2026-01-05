@@ -58,8 +58,8 @@ val marketplace = Marketplace.Builder(
     .build()
 
 // 3. Write to disk
-marketplace.writeToClaudeCode(Path("output"))
-// Or just the plugin: plugin.writeToClaudeCode(Path("output"))
+marketplace.writeClaudeCodeExtension(Path("output"))
+// Or just the plugin: plugin.writeClaudeCodeExtension(Path("output"))
 ```
 
 ## Generated Structure

@@ -36,7 +36,7 @@ val skill = Skill.Builder(
     .build()
 
 // Output to specific platform
-skill.writeToClaudeCode(Path("output"))  // generates: output/pdf-processor/SKILL.md
+skill.writeClaudeCodeExtension(Path("output"))  // generates: output/pdf-processor/SKILL.md
 skill.toClaudeCodeString()               // returns SKILL.md content as string
 
 // Future: other platforms
@@ -52,7 +52,7 @@ val plugin = Plugin.Builder(
     .addSkill(name = "style", description = "Style guide", body = "# Style\n...")
     .build()
 
-plugin.writeToClaudeCode(Path("output"))
+plugin.writeClaudeCodeExtension(Path("output"))
 // generates:
 // output/my-formatter/
 // ├── .claude-plugin/plugin.json
@@ -75,7 +75,7 @@ val marketplace = Marketplace.Builder(
     )
     .build()
 
-marketplace.writeToClaudeCode(Path("output"))
+marketplace.writeClaudeCodeExtension(Path("output"))
 // generates:
 // output/my-team-tools/
 // └── .claude-plugin/marketplace.json

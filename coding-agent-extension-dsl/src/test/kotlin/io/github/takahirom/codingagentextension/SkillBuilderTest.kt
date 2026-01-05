@@ -1,7 +1,7 @@
 package io.github.takahirom.codingagentextension
 
 import io.github.takahirom.codingagentextension.claudecode.toClaudeCodeString
-import io.github.takahirom.codingagentextension.claudecode.writeToClaudeCode
+import io.github.takahirom.codingagentextension.claudecode.writeClaudeCodeExtension
 import io.github.takahirom.codingagentextension.model.Skill
 import io.github.takahirom.codingagentextension.validation.ValidationException
 import org.junit.jupiter.api.Test
@@ -72,7 +72,7 @@ class SkillBuilderTest {
             body = "# Content"
         ).build()
 
-        skill.writeToClaudeCode(tempDir)
+        skill.writeClaudeCodeExtension(tempDir)
 
         val skillFile = tempDir.resolve("my-skill/SKILL.md")
         assertTrue(skillFile.toFile().exists())

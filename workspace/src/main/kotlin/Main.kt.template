@@ -1,5 +1,5 @@
 import io.github.takahirom.codingagentextension.model.*
-import io.github.takahirom.codingagentextension.claudecode.writeToClaudeCode
+import io.github.takahirom.codingagentextension.claudecode.writeClaudeCodeExtension
 import java.nio.file.Path
 
 fun main(args: Array<String>) {
@@ -45,7 +45,7 @@ fun main(args: Array<String>) {
         .build()
 
     // 3. Write everything with a single call
-    marketplace.writeToClaudeCode(outputDir)
+    marketplace.writeClaudeCodeExtension(outputDir)
 
     println("Done! Check $outputDir/my-marketplace/")
 }

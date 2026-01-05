@@ -1,6 +1,6 @@
 package io.github.takahirom.codingagentextension
 
-import io.github.takahirom.codingagentextension.claudecode.writeToClaudeCode
+import io.github.takahirom.codingagentextension.claudecode.writeClaudeCodeExtension
 import io.github.takahirom.codingagentextension.model.Command
 import io.github.takahirom.codingagentextension.model.Plugin
 import io.github.takahirom.codingagentextension.model.Skill
@@ -51,7 +51,7 @@ class GenerationTest {
             .addMetadata("version", "1.0.0")
             .build()
 
-        skill.writeToClaudeCode(outputDir)
+        skill.writeClaudeCodeExtension(outputDir)
 
         assertTrue(
             outputDir.resolve("pdf-processor/SKILL.md").exists(),
@@ -94,7 +94,7 @@ class GenerationTest {
             )
             .build()
 
-        plugin.writeToClaudeCode(outputDir)
+        plugin.writeClaudeCodeExtension(outputDir)
 
         assertTrue(
             outputDir.resolve("code-quality/.claude-plugin/plugin.json").exists(),

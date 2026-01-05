@@ -52,7 +52,7 @@ val marketplace = Marketplace.Builder(
     .build()
 
 // Write everything with a single call
-marketplace.writeToClaudeCode(Path("output"))
+marketplace.writeClaudeCodeExtension(Path("output"))
 ```
 
 This generates:

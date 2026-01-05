@@ -15,7 +15,12 @@ private val json = Json {
 fun Skill.toClaudeCodeString(): String = buildString {
     appendLine("---")
     appendLine("name: $name")
-    appendLine("description: $description")
+    if (description.contains("\n")) {
+        appendLine("description: |")
+        description.lines().forEach { appendLine("  $it") }
+    } else {
+        appendLine("description: $description")
+    }
     license?.let { appendLine("license: $it") }
     if (allowedTools.isNotEmpty()) {
         appendLine("allowed-tools: ${allowedTools.joinToString(", ")}")

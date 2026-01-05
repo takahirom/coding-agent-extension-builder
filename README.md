@@ -6,16 +6,15 @@ Kotlin library for generating coding agent (Claude Code, etc.) plugins and skill
 
 Writing coding agent extensions (plugins, skills, marketplaces) is error-prone:
 
-- Need to remember `marketplace.json` format
-- Need to create correct folder structure (`.claude-plugin/plugin.json`, `skills/*/SKILL.md`, etc.)
 - Easy to misspell YAML front matter field names (`allowed-tools`? `allowedTools`?)
+- Easy to use wrong folder structure (`.claude-plugin/plugin.json`, `skills/*/SKILL.md`, etc.)
 - **Mistakes are hard to catch because agents still work reasonably well with invalid config**
 
-This library provides:
+This library provides **compile-time validation**:
 
-- **Compile-time validation** by making required fields constructor arguments
-- Automatic folder structure and file name generation
-- No more typos in field names
+- Required fields are constructor arguments → missing fields won't compile
+- Field names are type-safe → no typos
+- Folder structure is generated automatically → no wrong paths
 
 ## Usage
 

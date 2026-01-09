@@ -2,10 +2,10 @@ package io.github.takahirom.codingagentextension
 
 import io.github.takahirom.codingagentextension.claudecode.toClaudeCodePluginJson
 import io.github.takahirom.codingagentextension.claudecode.writeClaudeCodeExtension
-import io.github.takahirom.codingagentextension.model.Agent
 import io.github.takahirom.codingagentextension.model.Command
 import io.github.takahirom.codingagentextension.model.Plugin
 import io.github.takahirom.codingagentextension.model.Skill
+import io.github.takahirom.codingagentextension.model.Subagent
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.nio.file.Path
@@ -56,8 +56,8 @@ class PluginBuilderTest {
             .addSkill(
                 Skill.Builder("style-guide", "Style guidelines", "# Style Guide").build()
             )
-            .addAgent(
-                Agent.Builder("code-reviewer", "Review code changes", "Review code changes.").build()
+            .addSubagent(
+                Subagent.Builder("code-reviewer", "Review code changes", "Review code changes.").build()
             )
             .build()
 
@@ -65,8 +65,8 @@ class PluginBuilderTest {
         assertEquals("format", plugin.commands[0].name)
         assertEquals(1, plugin.skills.size)
         assertEquals("style-guide", plugin.skills[0].name)
-        assertEquals(1, plugin.agents.size)
-        assertEquals("code-reviewer", plugin.agents[0].name)
+        assertEquals(1, plugin.subagents.size)
+        assertEquals("code-reviewer", plugin.subagents[0].name)
     }
 
     @Test
@@ -99,8 +99,8 @@ class PluginBuilderTest {
             .addSkill(
                 Skill.Builder("greeting", "Greeting skill", "# Greeting").build()
             )
-            .addAgent(
-                Agent.Builder("code-reviewer", "Review code changes", "Review code changes.").build()
+            .addSubagent(
+                Subagent.Builder("code-reviewer", "Review code changes", "Review code changes.").build()
             )
             .build()
 

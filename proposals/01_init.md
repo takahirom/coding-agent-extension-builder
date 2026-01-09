@@ -119,5 +119,5 @@ coding-agent-extension-builder/
 
 ## Out of Scope (v1)
 
-- Agents, hooks, MCP servers
+- Subagents, hooks, MCP servers
 - Gradle plugin integration

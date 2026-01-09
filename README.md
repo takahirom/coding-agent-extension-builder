@@ -8,7 +8,7 @@ Writing coding agent extensions (plugins, skills, marketplaces) is error-prone:
 
 - Easy to misspell YAML front matter field names (`allowed-tools`? `allowedTools`?)
 - Easy to use wrong folder structure (`.claude-plugin/plugin.json`, `skills/*/SKILL.md`, etc.)
-- **Mistakes are hard to catch because agents still work reasonably well with invalid config**
+- **Mistakes are hard to catch because subagents still work reasonably well with invalid config**
 
 This library provides **compile-time validation**:
 
@@ -40,8 +40,8 @@ val plugin = Plugin.Builder(
             body = "# Style\n..."
         ).build()
     )
-    .addAgent(
-        Agent.Builder(
+    .addSubagent(
+        Subagent.Builder(
             name = "code-reviewer",
             description = "Review code changes",
             body = "You are a senior code reviewer. Focus on code quality and security."

@@ -51,8 +51,8 @@ fun Command.toClaudeCodeString(): String = buildString {
     append(body)
 }
 
-// Extension functions for Agent
-fun Agent.toClaudeCodeString(): String = buildString {
+// Extension functions for Subagent
+fun Subagent.toClaudeCodeString(): String = buildString {
     appendLine("---")
     appendLine("name: $name")
     appendLine("description: $description")
@@ -148,11 +148,11 @@ fun Plugin.writeClaudeCodeExtension(outputDir: Path) {
     }
 
     // Create agents/*.md
-    if (agents.isNotEmpty()) {
+    if (subagents.isNotEmpty()) {
         val agentsDir = pluginDir.resolve("agents")
         agentsDir.createDirectories()
-        agents.forEach { agent ->
-            agentsDir.resolve("${agent.name}.md").writeText(agent.toClaudeCodeString())
+        subagents.forEach { subagent ->
+            agentsDir.resolve("${subagent.name}.md").writeText(subagent.toClaudeCodeString())
         }
     }
 

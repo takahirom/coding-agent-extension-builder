@@ -2,7 +2,7 @@ package io.github.takahirom.codingagentextension.model
 
 import io.github.takahirom.codingagentextension.validation.Validators
 
-data class Agent(
+data class Subagent(
     val name: String,
     val description: String,
     val body: String,
@@ -29,11 +29,11 @@ data class Agent(
 
         fun skills(vararg skills: String) = apply { this.skills = skills.toList() }
 
-        fun build(): Agent {
+        fun build(): Subagent {
             Validators.validateName(name).throwIfInvalid()
             Validators.validateDescription(description).throwIfInvalid()
 
-            return Agent(
+            return Subagent(
                 name = name,
                 description = description,
                 body = body,

@@ -51,9 +51,11 @@ val plugin = Plugin.Builder(
             .build()
     )
     .addHook(
-        HookMatcher.Builder(HookEvent.PostToolUse)
+        HookMatcher.Builder(
+            event = HookEvent.PostToolUse,
+            hook = HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", timeout = 30)
+        )
             .matcher("Write|Edit")
-            .addCommand(HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", timeout = 30))
             .build()
     )
     .build()

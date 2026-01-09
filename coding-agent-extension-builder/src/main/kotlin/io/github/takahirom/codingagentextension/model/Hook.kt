@@ -41,9 +41,12 @@ data class HookMatcher(
     val matcher: String? = null,
     val hooks: List<HookCommand>
 ) {
-    class Builder(private val event: HookEvent) {
+    class Builder(
+        private val event: HookEvent,
+        hook: HookCommand
+    ) {
         private var matcher: String? = null
-        private val hooks = mutableListOf<HookCommand>()
+        private val hooks = mutableListOf(hook)
 
         /**
          * Set the matcher pattern for tool-based events (PreToolUse, PostToolUse, PermissionRequest).

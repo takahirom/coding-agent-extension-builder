@@ -16,9 +16,11 @@ class HookBuilderTest {
 
     @Test
     fun `hook with command`() {
-        val hook = HookMatcher.Builder(HookEvent.PostToolUse)
+        val hook = HookMatcher.Builder(
+            event = HookEvent.PostToolUse,
+            hook = HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", timeout = 30)
+        )
             .matcher("Write|Edit")
-            .addCommand(HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", timeout = 30))
             .build()
 
         assertEquals(HookEvent.PostToolUse, hook.event)
@@ -31,8 +33,10 @@ class HookBuilderTest {
 
     @Test
     fun `hook with prompt`() {
-        val hook = HookMatcher.Builder(HookEvent.Stop)
-            .addPrompt(HookCommand.Prompt("Check if all tasks are complete. Context: \$ARGUMENTS"))
+        val hook = HookMatcher.Builder(
+            event = HookEvent.Stop,
+            hook = HookCommand.Prompt("Check if all tasks are complete. Context: \$ARGUMENTS")
+        )
             .build()
 
         assertEquals(HookEvent.Stop, hook.event)
@@ -44,9 +48,11 @@ class HookBuilderTest {
 
     @Test
     fun `hook with multiple commands`() {
-        val hook = HookMatcher.Builder(HookEvent.PreToolUse)
+        val hook = HookMatcher.Builder(
+            event = HookEvent.PreToolUse,
+            hook = HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh")
+        )
             .matcher("Bash")
-            .addCommand(HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh"))
             .addCommand(HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/log.sh", timeout = 10))
             .build()
 
@@ -56,9 +62,11 @@ class HookBuilderTest {
     @Test
     fun `hooks generate valid JSON`() {
         val hooks = listOf(
-            HookMatcher.Builder(HookEvent.PostToolUse)
+            HookMatcher.Builder(
+                event = HookEvent.PostToolUse,
+                hook = HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", timeout = 30)
+            )
                 .matcher("Write|Edit")
-                .addCommand(HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh", timeout = 30))
                 .build()
         )
 
@@ -79,9 +87,11 @@ class HookBuilderTest {
             version = "1.0.0"
         )
             .addHook(
-                HookMatcher.Builder(HookEvent.PostToolUse)
+                HookMatcher.Builder(
+                    event = HookEvent.PostToolUse,
+                    hook = HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh")
+                )
                     .matcher("Write|Edit")
-                    .addCommand(HookCommand.Command("\${CLAUDE_PLUGIN_ROOT}/scripts/format.sh"))
                     .build()
             )
             .build()
@@ -107,13 +117,17 @@ class HookBuilderTest {
     @Test
     fun `multiple hooks for same event are grouped`() {
         val hooks = listOf(
-            HookMatcher.Builder(HookEvent.PostToolUse)
+            HookMatcher.Builder(
+                event = HookEvent.PostToolUse,
+                hook = HookCommand.Command("cmd1")
+            )
                 .matcher("Write")
-                .addCommand(HookCommand.Command("cmd1"))
                 .build(),
-            HookMatcher.Builder(HookEvent.PostToolUse)
+            HookMatcher.Builder(
+                event = HookEvent.PostToolUse,
+                hook = HookCommand.Command("cmd2")
+            )
                 .matcher("Edit")
-                .addCommand(HookCommand.Command("cmd2"))
                 .build()
         )
 
